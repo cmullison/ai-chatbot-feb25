@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import {
   UIMessage,
   appendResponseMessages,
@@ -159,8 +160,11 @@ export async function POST(request: Request) {
       },
     });
   } catch (error) {
+    // Log the actual error for debugging
+    console.error('Error in POST /api/chat:', error);
+    // Return 500 for internal server errors
     return new Response('An error occurred while processing your request!', {
-      status: 404,
+      status: 500,
     });
   }
 }

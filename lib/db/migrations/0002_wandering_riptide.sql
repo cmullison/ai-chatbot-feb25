@@ -13,7 +13,15 @@ CREATE TABLE IF NOT EXISTS "Vote" (
 	CONSTRAINT "Vote_chatId_messageId_pk" PRIMARY KEY("chatId","messageId")
 );
 --> statement-breakpoint
-ALTER TABLE "Chat" ADD COLUMN "title" text NOT NULL;--> statement-breakpoint
+-- Add title column as nullable first
+ALTER TABLE "Chat" ADD COLUMN "title" text;
+--> statement-breakpoint
+-- Update existing rows to have a default title
+UPDATE "Chat" SET "title" = 'Untitled Chat' WHERE "title" IS NULL;
+--> statement-breakpoint
+-- Now, enforce the NOT NULL constraint
+ALTER TABLE "Chat" ALTER COLUMN "title" SET NOT NULL;
+--> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "Message" ADD CONSTRAINT "Message_chatId_Chat_id_fk" FOREIGN KEY ("chatId") REFERENCES "public"."Chat"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
