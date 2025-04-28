@@ -17,4 +17,9 @@ export const chatModels: Array<ChatModel> = [
     name: 'Reasoning model',
     description: 'Uses advanced reasoning',
   },
+  {
+    id: 'small-model',
+    name: 'Image generation model',
+    description: 'Uses advanced image generation',
+  },
 ];

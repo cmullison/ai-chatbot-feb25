@@ -3,7 +3,14 @@ import { getToken } from 'next-auth/jwt';
 import { guestRegex, isDevelopmentEnvironment } from './lib/constants';
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
+
+  // Allow requests with callbackUrl pointing to localhost:3000
+  const callbackUrl = searchParams.get('callbackUrl');
+  // biome-ignore lint/complexity/useOptionalChain: <explanation>
+  if (callbackUrl && callbackUrl.startsWith('http://localhost:3000')) {
+    return NextResponse.next();
+  }
 
   /*
    * Playwright starts the dev server and requires a 200 status to
