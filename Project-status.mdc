@@ -1,0 +1,58 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# AI Chatbot Project Status
+
+## Project Overview
+This is a Next.js-based AI chatbot project using modern web technologies and AI capabilities. The project is built with a robust tech stack including React, TypeScript, and various AI SDKs.
+
+## Current Tech Stack
+- **Framework**: Next.js 15.3 (Canary)
+- **Language**: TypeScript
+- **UI**: React 19 (RC)
+- **Styling**: Tailwind CSS
+- **Database**: Vercel Postgres with Drizzle ORM
+- **Authentication**: NextAuth.js v5 Beta
+- **AI Integration**: Multiple AI SDKs (@ai-sdk/*)
+- **Code Editing**: CodeMirror 6
+- **Text Editing**: ProseMirror
+- **Testing**: Playwright
+- **Linting/Formatting**: Biome, ESLint
+
+## Features
+- Advanced AI chat capabilities
+- Code editing support
+- Rich text editing
+- Database integration
+- Authentication system
+- Analytics integration (Vercel Analytics)
+- Blob storage support (Vercel Blob)
+
+## Project Structure
+- `/app` - Next.js application routes and pages
+- `/components` - React components
+- `/hooks` - Custom React hooks
+- `/lib` - Utility functions and configurations
+- `/public` - Static assets
+- `/tests` - Playwright tests
+
+## Development Tools
+- Package Manager: pnpm (v9.12.3)
+- Development Server: Next.js with Turbo
+- Database Tools: Drizzle Kit for migrations and schema management
+- Testing Framework: Playwright
+
+## To-Do
+- [ ] Implement search generation API
+- [ ] Update metadata (favicon, apple icons, titles, head, etc.)
+- [ ] Continue maintaining and updating dependencies
+- [ ] Ensure all tests are passing
+- [ ] Monitor and optimize performance
+
+## Recent Updates
+- Integration of multiple AI SDKs
+- Updated to Next.js 15.3 canary
+- Implementation of advanced code and text editing capabilities
+- Setup of comprehensive testing infrastructure
