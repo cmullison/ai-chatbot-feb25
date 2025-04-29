@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default */
 // API route for generating chat suggestions
 import { type NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
