@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     }
 
     const prompt = `
-Given this previous AI response, generate 2-3 natural follow-up questions or responses that a user might want to ask. These should be directly related to the specific content and context of the previous response.
+Given this previous AI response, generate 2-3 varied natural follow-up questions or responses that a user might want to ask. These can be related to the specific content and context of the previous response, or an extension of the previous response to further explore the topic or branch out into related topics.  If the previous response is a question, generate at least one direct response.
 
 Previous AI response:
 "${previous_response}"
