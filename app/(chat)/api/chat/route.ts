@@ -215,19 +215,3 @@ export async function DELETE(request: Request) {
     });
   }
 }
-
-export async function handler(request: Request) {
-  const { method } = request;
-
-  if (method !== 'POST' && method !== 'DELETE') {
-    return new Response('Method Not Allowed', { status: 405 });
-  }
-
-  if (method === 'POST') {
-    return POST(request);
-  }
-
-  if (method === 'DELETE') {
-    return DELETE(request);
-  }
-}
