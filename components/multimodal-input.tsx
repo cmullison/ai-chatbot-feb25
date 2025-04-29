@@ -20,9 +20,10 @@ import { ArrowUpIcon, PaperclipIcon, StopIcon } from './icons';
 import { PreviewAttachment } from './preview-attachment';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
-import { SuggestedActions } from './suggested-actions';
 import equal from 'fast-deep-equal';
 import type { UseChatHelpers } from '@ai-sdk/react';
+import { SuggestedActions } from './suggested-actions';
+import { SuggestedReplies } from './suggested-replies';
 
 function PureMultimodalInput({
   chatId,
@@ -179,13 +180,53 @@ function PureMultimodalInput({
     [setAttachments],
   );
 
+  const handleSuggestionClick = (suggestion: string) => {
+    setInput(suggestion);
+    submitForm();
+  };
+
+  // Add state for suggested replies
+  const [showReplies, setShowReplies] = useState(false);
+
+  // Effect to show replies when assistant responds
+  useEffect(() => {
+    if (messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      console.log('Last message:', {
+        role: lastMessage.role,
+        content: lastMessage.content,
+      });
+      if (lastMessage.role === 'assistant') {
+        console.log(
+          'Showing replies for assistant message:',
+          lastMessage.content,
+        );
+        setShowReplies(true);
+      } else {
+        console.log('Not showing replies - message is from:', lastMessage.role);
+        setShowReplies(false);
+      }
+    } else {
+      console.log('No messages yet');
+    }
+  }, [messages]);
+
   return (
     <div className="relative w-full flex flex-col gap-4">
-      {messages.length === 0 &&
-        attachments.length === 0 &&
-        uploadQueue.length === 0 && (
-          <SuggestedActions append={append} chatId={chatId} />
-        )}
+      {messages.length === 0 && (
+        <div className="mb-4">
+          <SuggestedActions chatId={chatId} append={append} />
+        </div>
+      )}
+
+      {showReplies && messages.length > 0 && (
+        <div className="mb-4">
+          <SuggestedReplies
+            append={append}
+            previousResponse={messages[messages.length - 1].content || ''}
+          />
+        </div>
+      )}
 
       <input
         type="file"
@@ -273,6 +314,7 @@ export const MultimodalInput = memo(
     if (prevProps.input !== nextProps.input) return false;
     if (prevProps.status !== nextProps.status) return false;
     if (!equal(prevProps.attachments, nextProps.attachments)) return false;
+    if (prevProps.messages.length !== nextProps.messages.length) return false;
 
     return true;
   },
