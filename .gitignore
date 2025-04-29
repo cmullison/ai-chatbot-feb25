@@ -5,6 +5,22 @@ node_modules
 .pnp
 .pnp.js
 
+# randon
+.env.local
+apartments-interior.png
+apartments-1.png
+apartments-2.png
+apartments-3.png
+apartments-4.png
+apartments-5.png
+apartments-6.png
+apartments-7.png
+apartments-8.png
+
+apartments.mjs
+test-copy.mjs
+
+
 # testing
 coverage
 
