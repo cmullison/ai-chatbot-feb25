@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     const { actions } = await req.json();
 
     const prompt = `
-You are an imaginative assistant. Based on the following list of actions, generate four unique, interesting, and engaging chat starter prompts for an AI model to respond to. Each prompt should be distinct and designed to spark interesting conversations or responses.
+You are an imaginative assistant and prolific writer. Generate four original, thought-provoking, interesting, and engaging chat starter prompts for an AI model to respond to. Each prompt should be distinct and designed to spark interesting conversations or responses. Do not hesitate to think outside the box and ask thought provoking questions.
 
 Actions:
 ${JSON.stringify(actions, null, 2)}
@@ -25,7 +25,7 @@ Format your response as a JSON array of four strings, each being a different cha
     `;
 
     const response = await openai.responses.parse({
-      model: 'o3-mini',
+      model: 'gpt-4.1-nano-2025-04-14',
       input: [{ role: 'user', content: prompt }],
       text: {
         format: zodTextFormat(ChatStarter, 'chat_starters'),

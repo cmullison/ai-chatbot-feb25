@@ -14,6 +14,7 @@ function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('SuggestedActions: Starting fetch');
     const fetchSuggestions = async () => {
       try {
         const res = await fetch('/api/generate-suggestions', {
@@ -29,6 +30,7 @@ function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
         }
 
         const data = await res.json();
+        console.log('SuggestedActions: Received data:', data);
 
         if (data.starters && Array.isArray(data.starters.starters)) {
           setSuggestions(data.starters.starters);
@@ -47,20 +49,54 @@ function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
     };
 
     fetchSuggestions();
-  }, []);
+
+    // Cleanup function to handle unmounting
+    return () => {
+      console.log('SuggestedActions: Cleanup');
+    };
+  }, []); // Empty dependency array means this only runs on mount
+
+  console.log(
+    'SuggestedActions: Rendering with loading:',
+    loading,
+    'suggestions:',
+    suggestions.length,
+  );
 
   if (loading) {
     return (
-      <div className="grid sm:grid-cols-2 gap-2 w-full">
-        Loading suggestions...
-      </div>
+      <motion.div
+        className="grid sm:grid-cols-2 gap-2 w-full"
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+      >
+        <div className="animate-pulse bg-muted rounded-xl px-4 py-3.5">
+          <div className="h-5 w-24 bg-muted-foreground/20 rounded mb-1" />
+          <div className="h-4 w-48 bg-muted-foreground/20 rounded" />
+        </div>
+        <div className="animate-pulse bg-muted rounded-xl px-4 py-3.5">
+          <div className="h-5 w-32 bg-muted-foreground/20 rounded mb-1" />
+          <div className="h-4 w-40 bg-muted-foreground/20 rounded" />
+        </div>
+        <div className="animate-pulse bg-muted rounded-xl px-4 py-3.5 hidden sm:block">
+          <div className="h-5 w-28 bg-muted-foreground/20 rounded mb-1" />
+          <div className="h-4 w-44 bg-muted-foreground/20 rounded" />
+        </div>
+        <div className="animate-pulse bg-muted rounded-xl px-4 py-3.5 hidden sm:block">
+          <div className="h-5 w-36 bg-muted-foreground/20 rounded mb-1" />
+          <div className="h-4 w-36 bg-muted-foreground/20 rounded" />
+        </div>
+      </motion.div>
     );
   }
 
   return (
-    <div
+    <motion.div
       data-testid="suggested-actions"
       className="grid sm:grid-cols-2 gap-2 w-full"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2 }}
     >
       {suggestions.map((suggestion, index) => {
         const title = suggestion.split(' ').slice(0, 3).join(' ');
@@ -95,7 +131,7 @@ function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
           </motion.div>
         );
       })}
-    </div>
+    </motion.div>
   );
 }
 

@@ -29,7 +29,7 @@ export const myProvider = isTestEnvironment
       languageModels: {
         'chat-model': openai('gpt-4.1-mini-2025-04-14'),
         'chat-model-reasoning': wrapLanguageModel({
-          model: openai('o3-mini'),
+          model: openai('o3'),
           middleware: extractReasoningMiddleware({ tagName: 'think' }),
         }),
         'title-model': openai('gpt-4o-mini'),
