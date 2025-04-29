@@ -40,6 +40,11 @@ export async function middleware(request: NextRequest) {
 
   const isGuest = guestRegex.test(token?.email ?? '');
 
+  // Prevent guests from accessing chat routes
+  if (isGuest && (pathname === '/' || pathname.startsWith('/chat'))) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
   if (token && !isGuest && ['/login', '/register'].includes(pathname)) {
     return NextResponse.redirect(new URL('/', request.url));
   }
